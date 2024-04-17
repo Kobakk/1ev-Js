@@ -1,5 +1,4 @@
 /* Ejercicio 3 [3 puntos] */
-
 /*
 Dado un array de arrays numéricos (cartones) y otro array con números (bolasExtraidas)
 Se le pedirá al usuario que introduzca el número de cartones con los que quiere jugar.
@@ -7,7 +6,6 @@ Comprobar que un los valores cada array (cartones) están en el array (bolasExtr
 El cartón premidado debe de poner ¡Premio! al lado
 Mostrar por pantalla el número de cartón con los números acertados en verde y los no acertados en rojo
 */
-
 const cartones = [
   [5, 1, 16, 18, 17, 23, 33, 43, 59, 68, 61, 78, 83, 82, 80],
   [1, 2, 16, 28, 36, 43, 42, 56, 50, 64, 65, 79, 75, 70, 86],
@@ -20,42 +18,47 @@ const cartones = [
   [9, 17, 23, 33, 37, 49, 48, 57, 54, 65, 78, 77, 70, 84, 85],
   [5, 11, 12, 21, 23, 25, 32, 46, 58, 59, 68, 64, 77, 72, 90],
 ];
-
 const bolasExtraidas = [
   62, 82, 48, 25, 80, 53, 28, 14, 56, 86, 3, 5, 16, 54, 32, 35, 19, 90, 85, 70, 20, 60, 73, 36, 46, 7, 9, 43, 52, 76, 12, 13, 59, 58, 78, 49, 66, 40, 83, 38, 69, 1, 26, 24, 31, 61, 47, 79, 21, 37, 11,
   42, 75, 15, 74, 68, 39, 89, 45, 57, 33, 88, 8, 34, 29, 41, 44, 77, 65, 50, 6, 2, 18, 64,
 ];
-
 /* [0,25] Crear una función que compruebe que el número de cartones que quiere el usuario.
 Se comprobará que ha introducido un valor, 
 que el valor introducido es del tipo correcto,
 el número mínimo de cartones es 1 y el máximo 10. */
-
-function comprobar(numCartones){
-  if (!numCartones) return 'Debes ingresar un valor';
-  if (isNaN(numCartones)) return 'Debes ingresar un numero';
-  numCartones = parseInt(numCartones);
-  if(numCartones <1 || numCartones > 10){
-    return 'El numero de cartones debe estar entre 1 y 10';
-  }
+function ComprobarNumero(numeroCartones) {
+  if(!isNaN(numeroCartones)) throw new Error(`${numeroCartones} debe ser un numero, y es ${typeof numeroCartones}.`);
+  if (numeroCartones === null) throw new Error(`${numeroCartones} es nulo.`);
+  if (numeroCartones === "") throw new Error(`${numeroCartones} esta vacio.`);
+  if (numeroCartones < 1 || numeroCartones > 10) throw new Error(`${numeroCartones} menor que 1 o mayor que 10.`)
   return true;
 }
-
 /* [1.5] Crear una función que compruebe si un cartón está premiado */
-function ganador(carton, bolasExtraidas){
-  for(let bola in bolasExtraidas){
-    if(!carton.includes(bola)){
+function cartonGanador(cartones, bolasExtraidas, numeroCarton) {
+  for (let i = 0; i < cartones[0].length; i++) {
+    if (!bolasExtraidas.includes(cartones[numeroCarton][i])) {
       return false;
     }
   }
   return true;
 }
-
 /* [0.25] Pedir al usuario el número de cartones con los que juega */
-function numeroCartones(){
-  return true;
-}
-
+let numeroCorrecto = false;
+while (!numeroCorrecto) {
+  try {
+    let numeroCartones = prompt("Ingresa un dato: ");
+    numeroCorrecto = ComprobarNumero(numeroCartones);
+    for (let i = 0; i < numeroCartones; i++) {
+      if (cartonGanador(cartones, bolasExtraidas, i)) {
+        console.log(`Carton ganador : ${i + 1}`);
+      } else {
+        console.log(`Carton ${i + 1}, no es correcto`);
+      }
+    }
+    }catch (error) {
+      console.log(`Error: ${error.message}`);
+    }
+  }
 // [0.25] Imprime en la web las bolas extraidas
 
 // [0.75] Comprueba si el cartón esta premiado e imprime los cartones en la web
