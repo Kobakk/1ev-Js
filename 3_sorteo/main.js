@@ -22,12 +22,14 @@ const bolasExtraidas = [
   62, 82, 48, 25, 80, 53, 28, 14, 56, 86, 3, 5, 16, 54, 32, 35, 19, 90, 85, 70, 20, 60, 73, 36, 46, 7, 9, 43, 52, 76, 12, 13, 59, 58, 78, 49, 66, 40, 83, 38, 69, 1, 26, 24, 31, 61, 47, 79, 21, 37, 11,
   42, 75, 15, 74, 68, 39, 89, 45, 57, 33, 88, 8, 34, 29, 41, 44, 77, 65, 50, 6, 2, 18, 64,
 ];
+
+
 /* [0,25] Crear una función que compruebe que el número de cartones que quiere el usuario.
 Se comprobará que ha introducido un valor, 
 que el valor introducido es del tipo correcto,
 el número mínimo de cartones es 1 y el máximo 10. */
 function ComprobarNumero(numeroCartones) {
-  if(!isNaN(numeroCartones)) throw new Error(`${numeroCartones} debe ser un numero, y es ${typeof numeroCartones}.`);
+  if(isNaN(numeroCartones)) throw new Error(`${numeroCartones} debe ser un numero, y es ${typeof numeroCartones}.`);
   if (numeroCartones === null) throw new Error(`${numeroCartones} es nulo.`);
   if (numeroCartones === "") throw new Error(`${numeroCartones} esta vacio.`);
   if (numeroCartones < 1 || numeroCartones > 10) throw new Error(`${numeroCartones} menor que 1 o mayor que 10.`)
@@ -55,10 +57,51 @@ while (!numeroCorrecto) {
         console.log(`Carton ${i + 1}, no es correcto`);
       }
     }
+
     }catch (error) {
       console.log(`Error: ${error.message}`);
     }
   }
 // [0.25] Imprime en la web las bolas extraidas
-
+function bolasExtraidasDOM(array){
+    const $div = document.createElement("div");
+    $div.innerHTML = `
+      <p>Bolas extraidas :${array}</p>
+    </div>
+    `;
+    return $div;        
+}
+const $ul = document.getElementsByTagName("body");
+console.log($ul[0]);
+$ul[0].appendChild(bolasExtraidasDOM(bolasExtraidas));
 // [0.75] Comprueba si el cartón esta premiado e imprime los cartones en la web
+function comprobarDarArray(numeroCartones, cartones, bolasExtraidas){
+  let i = [];
+  let j = [];
+  for(let i = 0; i < numeroCartones; i++){
+    for(let j = 0; j < numeroCartones; j++){
+      if( bolasExtraidas.includes(cartones[i][j])) i[i]=i, j[j]=j;
+    }
+  }
+}
+
+
+//Aleatorio
+
+const aleatorio2 = () => {
+  while(pedidos.length < num){
+    let aleatorio = Math.floor(Math.random() * cartones.length);
+    if(!pedidos.includes(cartones[aleatorio])) pedidos.push(cartones[aleatorio]);
+    
+  }
+}
+
+const aleatorio3 = () => {
+  const conjunto = new Set();
+  while(conjunto.size < num){
+    let aleatorio = Math.floor(Math.random() * cartones.length);
+    conjunto.add(cartones[aleatorio]);
+  }
+  pedidos = Array.from(conjunto);
+
+}
