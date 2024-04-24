@@ -1,5 +1,4 @@
 /* Ejercicio 5 [3 puntos] */
-
 /* Dados los siguientes array de letras, números y caracteres especiales */
 const letras = [
   "a",
@@ -60,25 +59,24 @@ const numeros = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
 const caracteresEspeciales = ["!", "#", "$", "&", "@", "_", "-", "(", "=", "?"];
 
 /* Nota: los passwords se mostrarán por consola */
-
 /* [1] Crea una función para generar un password débil:
   - Compuesta por 5 letras y 3 números.
   - Se utilizarán los arrays definidos en el programa principal.
   - Tanto la posición como el valor se obtendrán de forma aleatoria.
 */
-function pwdFacil(){
+function pwdFacil() {
   let pwd = '';
-  for(let i = 0; i < 5; i++){
+  for (let i = 0; i < 5; i++) {
     let randomIndex = Math.floor(Math.random() * letras.length);
     pwd += letras[randomIndex];
   }
-  for(let i = 0; i< 3; i++){
-    let randomIndex = Math.floor(Math.random() *numeros.length);
+  for (let i = 0; i < 3; i++) {
+    let randomIndex = Math.floor(Math.random() * numeros.length);
     pwd += numeros[randomIndex];
   }
   return pwd;
 }
-console.log(pwdFacil());
+//console.log(pwdFacil());
 /* [1.5] Crea una función para generar un password fuerte: 
 
   - Compuesta por 6 letras, 4 números y 3 caracteres especiales.
@@ -96,33 +94,53 @@ console.log(pwdFacil());
 //   }
 //   return array;
 // }
-function pwdDificil(){
+function pwdDificil() {
   let pwd = '';
   //especial
-  let randomIndexEspecial = Math.floor(Math.random()* caracteresEspeciales.length);
+  let randomIndexEspecial = Math.floor(Math.random() * caracteresEspeciales.length);
   pwd += caracteresEspeciales[randomIndexEspecial];
   //mayuscula
-  let iMayuscula =  Math.floor(Math.random() * letras.length);
+  let iMayuscula = Math.floor(Math.random() * letras.length);
   let mayus = letras[iMayuscula].toLocaleUpperCase();
   pwd += mayus;
   //5 minusculas aleatorias
   let minus = letras.filter(letra => letra !== mayus.toLowerCase());
-  for(let i = 0; i< 5; i++){
+  for (let i = 0; i < 5; i++) {
     let rI = Math.floor(Math.random() * minus.length);
     pwd += minus[rI].toLowerCase();
     minus.splice(rI, 1);
   }
-  for(let i = 0; i<4;i++){
+  for (let i = 0; i < 4; i++) {
     let rI = Math.floor(Math.random() * numeros.length);
     pwd += numeros[rI];
   }
-  for (let i= 0; i<3;i++){
+  for (let i = 0; i < 3; i++) {
     let rIS = Math.floor(Math.random() * caracteresEspeciales.length);
     pwd += caracteresEspeciales[rIS];
   }
   return pwd;
 }
-console.log(pwdDificil());
+//console.log(pwdDificil());
 /* [0.5] Pedir al usuario la que elija una opción,
    comprobar que la opción es correcta y si no lo es advertirle,
    repetir hasta que elija terminar */
+function ComprobarRespuesta(respuesta) {
+  //if(isNaN(numeroCartones)) throw new Error(`${numeroCartones} debe ser un numero, y es ${typeof numeroCartones}.`);
+  if (respuesta === null) throw new Error(`${respuesta} es nulo.`);
+  if (respuesta === "") throw new Error(`${respuesta} esta vacio.`);
+  if (respuesta !== "facil" && respuesta !== "dificil") throw new Error(`${respuesta} debe ser facil o dificil.`);
+  return true;
+}
+document.addEventListener('DOMContentLoaded', function () {
+  let respuestaCorrecta = false;
+  while (!respuestaCorrecta) {
+    try {
+      let respuesta = prompt("¿Quieres una contraseña (facil) o (dificil)?: ");
+      respuestaCorrecta = ComprobarRespuesta(respuesta);
+      if (respuesta == "facil") console.log(` Contraseña creada: ${pwdFacil()}`);
+      if (respuesta == "dificil") console.log(`Contraseña creada: ${pwdDificil()}`);
+    } catch (error) {
+      console.log(`Error: ${error.message}`);
+    }
+  }
+});
