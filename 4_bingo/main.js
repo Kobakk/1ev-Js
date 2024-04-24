@@ -103,18 +103,38 @@ function ComprobarNumero(numeroCartones) {
     if (numeroCartones === "") throw new Error(`${numeroCartones} esta vacio.`);
     if (numeroCartones < 1 || numeroCartones > 90) throw new Error(`${numeroCartones} menor que 1 o mayor que 90.`)
     return true;
-  }
+}
+
+function mostrarContenidoBombo(numeroBolas,arrayBolas, bolasExtraidas, arrayBolasExtraidas){
+    const $body =  document.body; /*document.getElementsByTagName('body');*/
+    const div = document.createElement("div");
+    div.innerHTML = `
+        <p>Cantidad bolas del bombo: ${numeroBolas}</p>
+        <p>Bolas del bombo: ${arrayBolas}</p>
+        <p>Cantidad bolas extraidas: ${bolasExtraidas}</p>
+        <p>Bolas extraidas: ${arrayBolasExtraidas}</p>
+    `;
+    $body.appendChild(div);
+}
 document.addEventListener('DOMContentLoaded', function(){
     const bombo1 = new Bombo(90);
     try{
         let bolasAExtraer = prompt('¿Cuatas bolas quieres extraer?');
-        numeroCorrecto = ComprobarNumero(bolasAExtraer);
-        bombo1.extraerBolas(numeroCorrecto);
-        console.log(bombo1.getBolasExtraidas());
+        ComprobarNumero(bolasAExtraer);
+        //console.log(bolasAExtraer);
+        bombo1.extraerBolas(bolasAExtraer);
+        const arrayBolasExtraidas = Array.from(bombo1.getBolasExtraidas());
+        const arrayBolas = Array.from(bombo1.getBolas());
+        const numeroBolasExtraidas = bombo1.getBolasExtraidasCantidad();
+        const numeroBolas = bombo1.getBolasCantidad();
+        console.log(arrayBolasExtraidas);
+        console.log(`numero extraidas: ${numeroBolasExtraidas}, numero bolas: ${numeroBolas}`);
+        console.log(`Array bolas: ${arrayBolas}, Array bolasExtraidas: ${arrayBolasExtraidas}`);
+
+        mostrarContenidoBombo(numeroBolas, arrayBolas, numeroBolasExtraidas, arrayBolasExtraidas);
+
     }catch(error){
         console.log(`Error: ${error.message}`);
     }
-
-
 
 });
