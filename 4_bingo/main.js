@@ -63,26 +63,58 @@ const bombo = {
 */
 
 class Bombo{
-    constructor(bolas, bolasExtraidas){
-        this.bolas = bolas;
-        this.bolasExtraidas = bolasExtraidas;
-        this.arrayBolas = new Set();
-    }
-    getBolas(){
-        return this.bolas;
+    constructor(numeroBolas){
+        this.numeroBolas = numeroBolas;
+        this.bolasExtraidas = new Set();
+        this.arrayBolas = this.inicializarBombo();
     }
     inicializarBombo(){
         const arrayBolas = new Set();
-        while(arrayBolas.size < this.bolas){
+        while(arrayBolas.size < this.numeroBolas){
             let aleatorio = Math.floor(Math.random() * 99) + 1;
             arrayBolas.add(aleatorio);
         }
-        this.arrayBolas = arrayBolas;
+        return arrayBolas;
+    }
+    extraerBolas(bolasaExtraer){
+        const arrayBolas = Array.from(this.arrayBolas);
+        while(this.bolasExtraidas.size < bolasaExtraer){
+            const aleatorio = Math.floor(Math.random() * arrayBolas.length);
+            const bolaExtraida = arrayBolas[aleatorio];
+            this.bolasExtraidas.add(bolaExtraida);
+        }
+    }
+    getBolas(){
+        return this.arrayBolas;
+    }
+    getBolasExtraidas(){
+        return this.bolasExtraidas;
+    }
+    getBolasCantidad(){
+        return this.arrayBolas.size;
+    }
+    getBolasExtraidasCantidad(){
+        return this.bolasExtraidas.size;
     }
 }
-
+function ComprobarNumero(numeroCartones) {
+    if(isNaN(numeroCartones)) throw new Error(`${numeroCartones} debe ser un numero, y es ${typeof numeroCartones}.`);
+    if (numeroCartones === null) throw new Error(`${numeroCartones} es nulo.`);
+    if (numeroCartones === "") throw new Error(`${numeroCartones} esta vacio.`);
+    if (numeroCartones < 1 || numeroCartones > 90) throw new Error(`${numeroCartones} menor que 1 o mayor que 90.`)
+    return true;
+  }
 document.addEventListener('DOMContentLoaded', function(){
-    const bombo1 = new Bombo(90, 0);
-    console.log(bombo1.getBolas())
-    
+    const bombo1 = new Bombo(90);
+    try{
+        let bolasAExtraer = prompt('¿Cuatas bolas quieres extraer?');
+        numeroCorrecto = ComprobarNumero(bolasAExtraer);
+        bombo1.extraerBolas(numeroCorrecto);
+        console.log(bombo1.getBolasExtraidas());
+    }catch(error){
+        console.log(`Error: ${error.message}`);
+    }
+
+
+
 });
