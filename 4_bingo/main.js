@@ -37,6 +37,7 @@ el número mínimo de bolas es 1 y el máximo 90. */
 // Mostrar en pantalla las bolas en el bombo.
 // Mostrar en pantalla la cantidad de bolas extraídas.
 // Mostrar en pantalla las bolas extraídas.
+/*
 const bombo = {
     bolas: [],
     bolasExtraidas: [],
@@ -59,5 +60,29 @@ const bombo = {
         console.log('Bolas en el Bombo: ', this.bolas.join(", "));
     }
 }
+*/
 
-bombo.inicializar();
+class Bombo{
+    constructor(bolas, bolasExtraidas){
+        this.bolas = bolas;
+        this.bolasExtraidas = bolasExtraidas;
+        this.arrayBolas = new Set();
+    }
+    getBolas(){
+        return this.bolas;
+    }
+    inicializarBombo(){
+        const arrayBolas = new Set();
+        while(arrayBolas.size < this.bolas){
+            let aleatorio = Math.floor(Math.random() * 99) + 1;
+            arrayBolas.add(aleatorio);
+        }
+        this.arrayBolas = arrayBolas;
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function(){
+    const bombo1 = new Bombo(90, 0);
+    console.log(bombo1.getBolas())
+    
+});
