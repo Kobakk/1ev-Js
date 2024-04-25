@@ -64,18 +64,33 @@ const caracteresEspeciales = ["!", "#", "$", "&", "@", "_", "-", "(", "=", "?"];
   - Se utilizarán los arrays definidos en el programa principal.
   - Tanto la posición como el valor se obtendrán de forma aleatoria.
 */
+const barajar = (array) =>{
+  let aux = array.length;
+  let resultado = [];
+  let randomIndex =  0;
+  while(resultado.length < aux){
+    randomIndex = Math.floor(Math.random() * array.length);
+    let valorExtraido = array.splice(randomIndex, 1)[0];
+    resultado.push(valorExtraido);
+  }
+  return resultado;
+}
+
 function pwdFacil() {
-  let pwd = '';
-  for (let i = 0; i < 5; i++) {
+  let pwd = [];
+
+  while(pwd.length < 5){
     let randomIndex = Math.floor(Math.random() * letras.length);
     pwd += letras[randomIndex];
   }
-  for (let i = 0; i < 3; i++) {
+  while(pwd.length < 9){
     let randomIndex = Math.floor(Math.random() * numeros.length);
-    pwd += numeros[randomIndex];
+    pwd += numeros[randomIndex];    
   }
-  return pwd;
+  let resultadoPwd  = barajar(pwd);
+  return resultadoPwd;
 }
+
 //console.log(pwdFacil());
 /* [1.5] Crea una función para generar un password fuerte: 
 
@@ -94,6 +109,7 @@ function pwdFacil() {
 //   }
 //   return array;
 // }
+
 function pwdDificil() {
   let pwd = '';
   //especial
@@ -120,12 +136,33 @@ function pwdDificil() {
   }
   return pwd;
 }
+const contraseñaDificil = (letras) => {
+  let pwd = [];
+
+  let randomIndex = 0;
+  let aux = 0;
+  while( !pwd.includes( letras[randomIndex].match(/[A-Z]/) ) || aux < 5){
+    console.log(`${letras[randomIndex]}, ${aux}`)
+    aux++;
+    randomIndex = Math.floor(Math.random() * letras.length);
+    console.log(`Intento numero ${aux}} : ${letras[randomIndex]}`);
+    if(letras[randomIndex].match( /[A-Z]/ )) pwd.push(letras[randomIndex]);
+  }
+
+  while(pwd.length < 6){
+    randomIndex = Math.floor(Math.random() * letras.length);
+    if(letras[randomIndex].match( /[a-z]/ ) && !letras[randomIndex].includes(pwd) ) pwd.push(letras[randomIndex]); 
+  }
+
+}
+contraseñaDificil(letras);
 //console.log(pwdDificil());
 /* [0.5] Pedir al usuario la que elija una opción,
    comprobar que la opción es correcta y si no lo es advertirle,
    repetir hasta que elija terminar */
+/*
 function ComprobarRespuesta(respuesta) {
-  //if(isNaN(numeroCartones)) throw new Error(`${numeroCartones} debe ser un numero, y es ${typeof numeroCartones}.`);
+
   if (respuesta === null) throw new Error(`${respuesta} es nulo.`);
   if (respuesta === "") throw new Error(`${respuesta} esta vacio.`);
   if (respuesta !== "facil" && respuesta !== "dificil") throw new Error(`${respuesta} debe ser facil o dificil.`);
@@ -144,3 +181,4 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 });
+*/
