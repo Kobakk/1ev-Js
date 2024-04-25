@@ -67,6 +67,7 @@ class Bombo{
         this.numeroBolas = numeroBolas;
         this.bolasExtraidas = new Set();
         this.arrayBolas = this.inicializarBombo();
+        //this.bolas = [...conjunto]; Utilizar Spread Operator 
     }
     inicializarBombo(){
         const arrayBolas = new Set();
@@ -76,13 +77,14 @@ class Bombo{
         }
         return arrayBolas;
     }
-    extraerBolas(bolasaExtraer){
-        const arrayBolas = Array.from(this.arrayBolas);
+    extraerBolas(bolasaExtraer){//No hace  falta tanto codigo 😃
+        const arrayBolas = Array.from(this.arrayBolas);//Usar nombres de var diferentes.
         while(this.bolasExtraidas.size < bolasaExtraer){
             const aleatorio = Math.floor(Math.random() * arrayBolas.length);
             const bolaExtraida = arrayBolas[aleatorio];
             this.bolasExtraidas.add(bolaExtraida);
         }
+        //this.bolasExtriadas.push(this.bolas.pop());
     }
     getBolas(){
         return this.arrayBolas;
@@ -97,7 +99,8 @@ class Bombo{
         return this.bolasExtraidas.size;
     }
 }
-function ComprobarNumero(numeroCartones) {
+
+const ComprobarNumero = (numeroCartones) => {
     if(isNaN(numeroCartones)) throw new Error(`${numeroCartones} debe ser un numero, y es ${typeof numeroCartones}.`);
     if (numeroCartones === null) throw new Error(`${numeroCartones} es nulo.`);
     if (numeroCartones === "") throw new Error(`${numeroCartones} esta vacio.`);
@@ -105,7 +108,7 @@ function ComprobarNumero(numeroCartones) {
     return true;
 }
 
-function mostrarContenidoBombo(numeroBolas,arrayBolas, bolasExtraidas, arrayBolasExtraidas){
+const  mostrarContenidoBombo = (numeroBolas,arrayBolas, bolasExtraidas, arrayBolasExtraidas) =>{
     const $body =  document.body; /*document.getElementsByTagName('body');*/
     const div = document.createElement("div");
     div.innerHTML = `
