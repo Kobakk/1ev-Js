@@ -242,3 +242,39 @@ const easyPwd = (pwd, aux, index,letras) =>{
   return pwd;
 }
 console.log(easyPwd(pwd,aux,index,letras, numeros));
+//contraseña dificil solventada
+const passwordHard = (pwd, aux, index, letras, numeros, especiales) =>{
+  pwd[0] = valorRandom(especiales);
+  aux.add(0);
+  while(aux.size < 13){
+    index = Math.floor(Math.random()*13);
+    if(!aux.has(index)){
+      let nuevoElemento;
+      if(aux.size == 1){
+        nuevoElemento = valorRandom(letras);
+        while(!nuevoElemento.match(/[A-Z]/)){
+          nuevoElemento = valorRandom(letras);
+        } 
+      } else if(aux.size<=6){
+        nuevoElemento = valorRandom(letras);
+        while(!nuevoElemento.match(/[a-z]/)){
+          nuevoElemento = valorRandom(letras);
+        }        
+      } else if(aux.size<=10){
+        nuevoElemento = valorRandom(numeros);
+        while(pwd.includes(nuevoElemento)){
+          nuevoElemento = valorRandom(numeros);
+        }     
+      } else{
+        nuevoElemento = valorRandom(especiales); 
+        while(pwd.includes(nuevoElemento)){
+          nuevoElemento = valorRandom(especiales);
+        }   
+      }
+      aux.add(index);
+      pwd[index] = nuevoElemento;
+    }
+  }
+  return pwd;
+}
+console.log(passwordHard(pwd, aux, index, letras, numeros, caracteresEspeciales));
