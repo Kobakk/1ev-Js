@@ -182,3 +182,35 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 });
 */
+
+//Otra manera
+const letraAleatoria = (letras) =>{
+  let random = Math.floor(Math.random()*letras.length);
+  return letras[random];
+}
+
+let pwd = [];
+let aux = new Set();
+let index = 0;
+let flag  = 0; let letrasFlag = 0;
+
+const easyPwd = (pwd, aux, index,letras) =>{
+
+  while(flag < 8){
+    index = Math.floor(Math.random()*8);
+    if(!aux.has(index)){
+      aux.add(index);
+      if(letrasFlag<5){
+        pwd[index] = letraAleatoria(letras);
+        letrasFlag++;
+      } else{
+        pwd[index] = flag;
+      }
+      flag++;
+    }    
+  }
+  return pwd;
+  
+}
+
+console.log(easyPwd(pwd,aux,index,letras));
