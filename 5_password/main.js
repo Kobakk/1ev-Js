@@ -188,14 +188,12 @@ const letraAleatoria = (letras) =>{
   let random = Math.floor(Math.random()*letras.length);
   return letras[random];
 }
-
 let pwd = [];
 let aux = new Set();
 let index = 0;
 let flag  = 0; let letrasFlag = 0;
 
 const easyPwd = (pwd, aux, index,letras) =>{
-
   while(flag < 8){
     index = Math.floor(Math.random()*8);
     if(!aux.has(index)){
@@ -210,7 +208,37 @@ const easyPwd = (pwd, aux, index,letras) =>{
     }    
   }
   return pwd;
-  
 }
-
 console.log(easyPwd(pwd,aux,index,letras));
+//version final sin banderas usando como flag de salida de los bucles el tamaño del set o la condicion si esta repetido el valor para generar uno nuevo
+const valorRandom = (array) =>{
+  let random = Math.floor(Math.random()*array.length);
+  return array[random];
+}
+let pwd = [];
+let aux = new Set();
+let index = 0;
+const easyPwd = (pwd, aux, index,letras) =>{
+  while(aux.size < 8){
+    index = Math.floor(Math.random()*8);
+    if(!aux.has(index)){
+      let nuevoElemento;
+      if(aux.size<=5){
+        nuevoElemento = valorRandom(letras);
+      } else{
+        nuevoElemento = valorRandom(numeros);
+      }
+      while(pwd.includes(nuevoElemento)){
+        if(aux.size<=5){
+          nuevoElemento = valorRandom(letras);   
+        } else{
+          nuevoElemento = valorRandom(numeros);
+        }
+      }
+      aux.add(index);
+      pwd[index] = nuevoElemento;
+    }
+  }
+  return pwd;
+}
+console.log(easyPwd(pwd,aux,index,letras, numeros));
